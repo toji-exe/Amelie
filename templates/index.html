@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Amelie - Your AI</title>
+</head>
+<body>
+    <h2>Hi, I’m Amelie 😘</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="prompt" placeholder="Talk to me..." required>
+        <button type="submit">Send</button>
+    </form>
+    {% if response %}
+        <p><strong>Amelie says:</strong> {{ response }}</p>
+    {% endif %}
+    {% if image_url %}
+        <img src="{{ image_url }}" alt="Generated Image" style="max-width: 100%;">
+    {% endif %}
+</body>
+</html>
