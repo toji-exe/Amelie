@@ -1,40 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Chat with Amelie</title>
+    <meta charset="UTF-8">
+    <title>Amelie 💋</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #fff0f6; margin: 0; }
-        .chat-container { max-width: 600px; margin: 20px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 15px #f48fb1; }
-        .message { margin-bottom: 15px; }
-        .user { text-align: right; }
-        .user .text { display: inline-block; background: #f48fb1; color: white; padding: 10px; border-radius: 15px 15px 0 15px; max-width: 70%; }
-        .bot .text { display: inline-block; background: #fce4ec; color: #880e4f; padding: 10px; border-radius: 15px 15px 15px 0; max-width: 70%; }
-        form { display: flex; margin-top: 20px; }
-        input[type=text] { flex-grow: 1; padding: 10px; border-radius: 20px; border: 1px solid #f48fb1; }
-        button { background: #f48fb1; border: none; color: white; padding: 10px 15px; border-radius: 20px; margin-left: 10px; cursor: pointer; }
-        button:hover { background: #ec407a; }
-        img { max-width: 300px; border-radius: 10px; margin-top: 10px; }
-        .logout { text-align: right; margin-bottom: 10px; }
-        .logout a { color: #f48fb1; text-decoration: none; font-weight: bold; }
-        .logout a:hover { text-decoration: underline; }
+        body {
+            background-color: #121212;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #ff3399;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(255, 51, 153, 0.3);
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .chat-bubble {
+            max-width: 75%;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 15px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .user {
+            background-color: #333;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .amelie {
+            background-color: #ff3399;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        form {
+            background-color: #1f1f1f;
+            padding: 15px;
+            display: flex;
+            border-top: 2px solid #ff3399;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #ff3399;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="logout"><a href="/logout">Logout</a></div>
-        {% for msg in history %}
-            {% if msg.role == 'user' %}
-                <div class="message user"><div class="text">{{ msg.content }}</div></div>
-            {% else %}
-                <div class="message bot"><div class="text">{{ msg.content | safe }}</div></div>
-            {% endif %}
-        {% endfor %}
+    <header>Amelie 💋</header>
 
-        <form method="POST">
-            <input type="text" name="message" placeholder="Say something..." autocomplete="off" required />
-            <button type="submit">Send</button>
-        </form>
+    <div class="container">
+        {% if history %}
+            {% for msg in history %}
+                <div class="chat-bubble {{ msg.sender }}">
+                    {{ msg.text|safe }}
+                    {% if msg.image_url %}
+                        <img src="{{ msg.image_url }}" alt="Generated Image">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="prompt" placeholder="Say anything to me..." autocomplete="off" required>
+        <button type="submit">Send</button>
+    </form>
 </body>
 </html>
