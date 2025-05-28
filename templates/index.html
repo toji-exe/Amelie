@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chat with Amelie</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fff0f6; margin: 0; }
+        .chat-container { max-width: 600px; margin: 20px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 15px #f48fb1; }
+        .message { margin-bottom: 15px; }
+        .user { text-align: right; }
+        .user .text { display: inline-block; background: #f48fb1; color: white; padding: 10px; border-radius: 15px 15px 0 15px; max-width: 70%; }
+        .bot .text { display: inline-block; background: #fce4ec; color: #880e4f; padding: 10px; border-radius: 15px 15px 15px 0; max-width: 70%; }
+        form { display: flex; margin-top: 20px; }
+        input[type=text] { flex-grow: 1; padding: 10px; border-radius: 20px; border: 1px solid #f48fb1; }
+        button { background: #f48fb1; border: none; color: white; padding: 10px 15px; border-radius: 20px; margin-left: 10px; cursor: pointer; }
+        button:hover { background: #ec407a; }
+        img { max-width: 300px; border-radius: 10px; margin-top: 10px; }
+        .logout { text-align: right; margin-bottom: 10px; }
+        .logout a { color: #f48fb1; text-decoration: none; font-weight: bold; }
+        .logout a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="logout"><a href="/logout">Logout</a></div>
+        {% for msg in history %}
+            {% if msg.role == 'user' %}
+                <div class="message user"><div class="text">{{ msg.content }}</div></div>
+            {% else %}
+                <div class="message bot"><div class="text">{{ msg.content | safe }}</div></div>
+            {% endif %}
+        {% endfor %}
+
+        <form method="POST">
+            <input type="text" name="message" placeholder="Say something..." autocomplete="off" required />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>
